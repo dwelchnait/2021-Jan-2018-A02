@@ -24,7 +24,6 @@ namespace ChinookSystem.Entities
         [StringLength(160, ErrorMessage = "Album title is limited to 160 characters.")]
         public string Title { get; set; }
 
-
         public int ArtistId { get; set; }
 
         public int ReleaseYear { get; set; }
@@ -35,5 +34,11 @@ namespace ChinookSystem.Entities
             get { return _ReleaseLabel; }
             set { _ReleaseLabel = string.IsNullOrEmpty(value) ? null : value; }
         }
+
+        //[NotMapped] annotations are also allowed
+
+        //navigational properties
+        //many to one direction child to parent
+        public virtual Artist Artist { get; set; }
     }
 }
