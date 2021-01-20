@@ -24,6 +24,15 @@ namespace WebApp.SamplePages
             }
         }
 
+        #region Error Handling ODS
+        protected void SelectCheckForException(object sender,
+             ObjectDataSourceStatusEventArgs e)
+        {
+            MessageUserControl.HandleDataBoundException(e);
+        }
+
+        #endregion
+
         protected void LoadArtistList()
         {
             ArtistController sysmgr = new ArtistController();
@@ -49,7 +58,7 @@ namespace WebApp.SamplePages
             {
                 //index 0 is physically pointing to the prompt line
 
-                //using MessageUserControl for your own message
+                //using MessageUserControl for your own message ()
                 MessageUserControl.ShowInfo("Search concern","Select an artist for the search.");
                 ArtistAlbumList.DataSource = null;
                 ArtistAlbumList.DataBind();
@@ -71,8 +80,8 @@ namespace WebApp.SamplePages
                         int.Parse(ArtistList.SelectedValue));
                     ArtistAlbumList.DataSource = info;
                     ArtistAlbumList.DataBind();
-                },"Success Message title", "your success message goes here");
-                
+                }, "Success Message title", "your success message goes here");
+                //
             }
         }
     }
