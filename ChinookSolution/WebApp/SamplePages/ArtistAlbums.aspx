@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Artist Albums List" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ArtistAlbums.aspx.cs" Inherits="WebApp.SamplePages.ArtistAlbums" %>
+﻿<%@ Page Title="Artist Albums List" Language="C#" MasterPageFile="~/Site.Master" 
+    AutoEventWireup="true" CodeBehind="ArtistAlbums.aspx.cs" Inherits="WebApp.SamplePages.ArtistAlbums" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1> Artist Albums List (ODS)</h1>
     <asp:GridView ID="ArtistAlbumsList" runat="server" 
