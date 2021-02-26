@@ -29,8 +29,8 @@
             OnClick="ArtistFetch_Click"/>
         <br /><br />
          <asp:Label ID="Label3" runat="server" Text="Genre"></asp:Label><br />
-        <asp:DropDownList ID="GenreDDL" runat="server"
-            Width="150px" DataSourceID="GenreDDLODS" 
+        <asp:DropDownList ID="GenreDDL" runat="server" 
+            DataSourceID="GenreDDLODS" 
             DataTextField="DisplayField" 
             DataValueField="ValueField">
         </asp:DropDownList><br />
@@ -223,7 +223,8 @@
         OldValuesParameterFormatString="original_{0}" 
         SelectMethod="List_GenreNames" 
          OnSelected="SelectCheckForException"
-        TypeName="ChinookSystem.BLL.GenreController"></asp:ObjectDataSource>
+        TypeName="ChinookSystem.BLL.GenreController">
+    </asp:ObjectDataSource>
    
     <asp:ObjectDataSource ID="TrackSelectionListODS" runat="server" 
         OldValuesParameterFormatString="original_{0}" 

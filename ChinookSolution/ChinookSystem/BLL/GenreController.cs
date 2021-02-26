@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 #region Additional Namespaces
-using ChinookSystem.Entities;
-using ChinookSystem.ViewModels;
 using ChinookSystem.DAL;
-using System.ComponentModel;
+using ChinookSystem.Entities;   
+using ChinookSystem.ViewModels; 
+using System.ComponentModel;    
 #endregion
 
 namespace ChinookSystem.BLL
@@ -21,13 +21,13 @@ namespace ChinookSystem.BLL
         {
             using (var context = new ChinookSystemContext())
             {
-                var results = from x in context.Genres
-                              orderby x.Name
-                              select new SelectionList
-                              {
-                                  ValueField = x.GenreId,
-                                  DisplayField = x.Name
-                              };
+                IEnumerable<SelectionList> results = from x in context.Genres
+                                                     orderby x.Name
+                                                     select new SelectionList
+                                                     {
+                                                         ValueField = x.GenreId,
+                                                         DisplayField = x.Name
+                                                     };
                 return results.ToList();
             }
         }
