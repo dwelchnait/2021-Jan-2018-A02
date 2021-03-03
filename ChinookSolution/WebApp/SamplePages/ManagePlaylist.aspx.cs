@@ -91,9 +91,23 @@ namespace WebApp.SamplePages
 
         protected void GenreFetch_Click(object sender, EventArgs e)
         {
+            TracksBy.Text = "Genre";
 
-                //code to go here
+            //if you had a prompt on your dropdownlist, you would verify that a 
+            //   selection was made
 
+            //you could use the value field of the dropdownlist
+            //SearchArg.Value = GenreDDL.SelectedValue;
+
+            //Can I use something else from the dropdownlist instead of the value field???
+            //there is the display field
+            //WARNING using the display field for the local, in this example, is possible 
+            //   because EACH description is unique!!!!!
+            SearchArg.Value = GenreDDL.SelectedItem.Text;
+
+            //to force the re-execution of an ODS attached to a display control
+            //    rebind the display control
+            TracksSelectionList.DataBind();
         }
 
         protected void AlbumFetch_Click(object sender, EventArgs e)
@@ -118,7 +132,37 @@ namespace WebApp.SamplePages
 
         protected void PlayListFetch_Click(object sender, EventArgs e)
         {
-            //code to go here
+            //username is coming from the system via security
+            //since security has yet to be installed, a defualt will be setup for the
+            //   username value
+            string username = "HansenB";
+            if (string.IsNullOrEmpty(PlaylistName.Text))
+            {
+                MessageUserControl.ShowInfo("Playlist Search", "No playlist name was supplied.");
+            }
+            else
+            {
+                //use some user friendly error handling
+                //the way we are doing the error handling is using MessageUserControl instead
+                //  of try/catch
+                //MessageUserControl has the try/catch embedded within the control logic
+                //within the MessageUserControl there exists a method called .TryRun()
+                //syntax
+                //   MessageUserControl.TryRun( () => {
+                //
+                //     your coding logic
+                //
+                //  }[,"message title","success message"]);
+                //
+                MessageUserControl.TryRun(() => { 
+                    PlaylistTracksController sysmgr = new PlaylistTracksController();
+                    List<UserPlaylistTrack> info = sysmgr.List_TracksForPlaylist(
+                        PlaylistName.Text, username);
+                    PlayList.DataSource = info;
+                    PlayList.DataBind();
+                },"Playlist Search","View the requested playlist below");
+               
+            }
  
         }
 

@@ -53,11 +53,11 @@ namespace ChinookSystem.BLL
             using (var context = new ChinookSystemContext())
             {
                 List<TrackList> results = null;
-
-                //if (tracksby.Equals("Artist"))
+                //int id = 0;
+                //if (int.TryParse(arg, out id))
                 //{
                 //    results = (from x in context.Tracks
-                //               where x.Album.Artist.Name.Contains(arg)
+                //               where tracksby.Equals("Genre") && id == x.GenreId 
                 //               select new TrackList
                 //               {
                 //                   TrackID = x.TrackId,
@@ -74,7 +74,8 @@ namespace ChinookSystem.BLL
                 //else
                 //{
                 //    results = (from x in context.Tracks
-                //               where x.Album.Title.Contains(arg)
+                //               where (tracksby.Equals("Artist") && x.Album.Artist.Name.Contains(arg)) ||
+                //                       (tracksby.Equals("Album") && x.Album.Title.Contains(arg))
                 //               select new TrackList
                 //               {
                 //                   TrackID = x.TrackId,
@@ -89,21 +90,41 @@ namespace ChinookSystem.BLL
                 //               }).ToList();
                 //}
 
+                //results = (from x in context.Tracks
+                //           where (tracksby.Equals("Artist") && x.Album.Artist.Name.Contains(arg)) ||
+                //                   (tracksby.Equals("Album") && x.Album.Title.Contains(arg))
+                //               ||
+                //                   (tracksby.Equals("Genre") && x.GenreId.ToString().Equals(arg))
+                //           select new TrackList
+                //           {
+                //               TrackID = x.TrackId,
+                //               Name = x.Name,
+                //               Title = x.Album.Title,
+                //               ArtistName = x.Album.Artist.Name,
+                //               GenreName = x.Genre.Name,
+                //               Composer = x.Composer,
+                //               Milliseconds = x.Milliseconds,
+                //               Bytes = x.Bytes,
+                //               UnitPrice = x.UnitPrice
+                //           }).ToList();
+
                 results = (from x in context.Tracks
-                          where (tracksby.Equals("Artist") && x.Album.Artist.Name.Contains(arg)) ||
-                                  (tracksby.Equals("Album") && x.Album.Title.Contains(arg))
-                          select new TrackList
-                          {
-                              TrackID = x.TrackId,
-                              Name = x.Name,
-                              Title = x.Album.Title,
-                              ArtistName = x.Album.Artist.Name,
-                              GenreName = x.Genre.Name,
-                              Composer = x.Composer,
-                              Milliseconds = x.Milliseconds,
-                              Bytes = x.Bytes,
-                              UnitPrice = x.UnitPrice
-                          }).ToList();
+                           where (tracksby.Equals("Artist") && x.Album.Artist.Name.Contains(arg)) ||
+                                   (tracksby.Equals("Album") && x.Album.Title.Contains(arg))
+                               ||
+                                   (tracksby.Equals("Genre") && x.Genre.Name.Equals(arg))
+                           select new TrackList
+                           {
+                               TrackID = x.TrackId,
+                               Name = x.Name,
+                               Title = x.Album.Title,
+                               ArtistName = x.Album.Artist.Name,
+                               GenreName = x.Genre.Name,
+                               Composer = x.Composer,
+                               Milliseconds = x.Milliseconds,
+                               Bytes = x.Bytes,
+                               UnitPrice = x.UnitPrice
+                           }).ToList();
                 return results;
             }
         }//eom
