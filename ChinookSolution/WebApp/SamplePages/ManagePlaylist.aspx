@@ -55,11 +55,11 @@
             <AlternatingItemTemplate>
                 <tr style="background-color: #FFFFFF; color: #284775;">
                     <td>
-                        <asp:LinkButton ID="AddtoPlaylist" runat="server"
+                        <asp:LinkButton ID="AddtoPlaylist" runat="server" 
                              CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
                             <i class="fa fa-plus" style="color:red; font-size:2em;"></i>&nbsp;
                         </asp:LinkButton>
-                        </td>
+                       </td>
                     <td>
                         <asp:Label Text='<%# Eval("Name") %>' runat="server" ID="NameLabel" /></td>
                     <td>
@@ -135,7 +135,8 @@
                         </td>
                     </tr>
                     <tr runat="server">
-                        <td runat="server" style="text-align: center; background-color: #5D7B9D; font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF">
+                        <td runat="server" style="text-align: center; background-color: #c0c0c0; 
+                                font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF">
                             <asp:DataPager runat="server" ID="DataPager1" PageSize="5" PagedControlID="TracksSelectionList">
                                 <Fields>
                                     <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
