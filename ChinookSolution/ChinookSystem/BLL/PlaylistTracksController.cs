@@ -109,11 +109,12 @@ namespace ChinookSystem.BLL
                                           select x).FirstOrDefault();
                     if (playlisttrackExist == null)
                     {
+
                         //track does not exist on the desired playlist
                         tracknumber = (from x in context.PlaylistTracks
                                        where x.Playlist.Name.Equals(playlistname) &&
                                                    x.Playlist.UserName.Equals(username)
-                                       select x.TrackNumber).Max();
+                                       select x.TrackNumber).Count();
                         tracknumber++;
                     }
                     else
@@ -176,7 +177,7 @@ namespace ChinookSystem.BLL
                 }
             }
         }//eom
-        public void MoveTrack(string username, string playlistname, int trackid, int tracknumber, string direction)
+        public void MoveTrack(MoveTrackItem movetrack)
         {
             using (var context = new ChinookSystemContext())
             {
@@ -189,7 +190,7 @@ namespace ChinookSystem.BLL
         public void DeleteTracks(string username, string playlistname, List<int> trackstodelete)
         {
             Playlist playlistExist = null;
-            PlaylistTrack playlisttrackExist = null;
+
             int tracknumber = 0;
             using (var context = new ChinookSystemContext())
             {
@@ -235,7 +236,7 @@ namespace ChinookSystem.BLL
 
                     //remove the desired tracks
                     PlaylistTrack item = null;
-                    foreach(var deleterecord in trackstodelete) //trackids to delete
+                    foreach (var deleterecord in trackstodelete) //trackids to delete
                     {
                         //getting a single row
                         item = context.PlaylistTracks
@@ -250,10 +251,33 @@ namespace ChinookSystem.BLL
                             playlistExist.PlaylistTracks.Remove(item);
                         }
                     }
+
+                    //re-sequence the kept tracks
+                    //option a) use a list and update the records of thelist
+                    //option b) delete all children records and re-add only the
+                    //              necessary kept records
+
+                    //within this example, you will see how to update specific
+                    //  column(s) of a record (option a)
+                    tracknumber = 1;
+                    foreach(var track in trackskept)
+                    {
+                        track.TrackNumber = tracknumber;
+                        //Stage the update
+                        context.Entry(track).Property(nameof(PlaylistTrack.TrackNumber)).IsModified = true;
+                        tracknumber++;
+                    }
                 }
 
-                //re-sequence the kept tracks
-
+                //commit?
+                if (brokenRules.Count > 0)
+                {
+                    throw new BusinessRuleCollectionException("Track Removal Concerns:", brokenRules);
+                }
+                else
+                {
+                    context.SaveChanges();
+                }
             }
         }//eom
     }
