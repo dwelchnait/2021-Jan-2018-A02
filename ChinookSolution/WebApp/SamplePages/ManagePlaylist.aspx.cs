@@ -268,6 +268,8 @@ namespace WebApp.SamplePages
                             rowsSelected++;
                             moveTrack.TrackID = int.Parse((trackSelection.FindControl("TrackId") as Label).Text);
                             moveTrack.TrackNumber = int.Parse((trackSelection.FindControl("TrackNumber") as Label).Text);
+
+
                         }
                     }
 
