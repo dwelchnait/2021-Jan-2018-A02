@@ -14,7 +14,7 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="css/font-awesome.css" rel="stylesheet" />
-
+    <link href="Content/myTabStyles.css" rel="stylesheet" />
 </head>
 <body>
     <form runat="server">
@@ -124,6 +124,10 @@
                                         href="~/SamplePages/ManagePlaylist.aspx"
                                         style="color:black" runat="server">
                                    OLTP Manage Playlist</a>
+                                <a class="dropdown-item"
+                                        href="~/SamplePages/MultiViewSetup.aspx"
+                                        style="color:black" runat="server">
+                                   Setting up a Mutliview control</a>
                             </div>
                          </li>
                          <li class="nav-item">
