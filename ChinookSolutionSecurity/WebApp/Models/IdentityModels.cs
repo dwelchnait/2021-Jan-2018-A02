@@ -8,11 +8,22 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApp.Models;
 
+
+#region Additional Namespaces
+using System.Data.Entity; //Database.SetInitializer
+using WebApp.Security;    //SecurityDbContextInitializer()
+#endregion
+
 namespace WebApp.Models
 {
     // You can add User data for the user by adding more properties to your User class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        #region Customized properties to hold customer and employee identifiers
+        //add an integer? field for each id
+        public int? CustomerId { get; set; }
+        public int? EmployeeId { get; set; }
+        #endregion
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -32,6 +43,8 @@ namespace WebApp.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            //place the line of code to call the setup of your roles and user
+            Database.SetInitializer<ApplicationDbContext>(new SecurityDbContextInitializer());
         }
 
         public static ApplicationDbContext Create()
