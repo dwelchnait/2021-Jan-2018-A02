@@ -197,6 +197,7 @@
     <Content Include="Global.asax" />
     <Content Include="Account\Web.config" />
     <Content Include="SamplePages\ArtistAlbums.aspx" />
+    <Content Include="SamplePages\DeniedAccess.aspx" />
     <Content Include="SamplePages\ListViewODSCRUD.aspx" />
     <Content Include="SamplePages\ManagePlaylist.aspx" />
     <Content Include="SamplePages\MultiViewSetup.aspx" />
@@ -480,6 +481,13 @@
     <Compile Include="SamplePages\ArtistAlbums.aspx.designer.cs">
       <DependentUpon>ArtistAlbums.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SamplePages\DeniedAccess.aspx.cs">
+      <DependentUpon>DeniedAccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SamplePages\DeniedAccess.aspx.designer.cs">
+      <DependentUpon>DeniedAccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SamplePages\ListViewODSCRUD.aspx.cs">
       <DependentUpon>ListViewODSCRUD.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -522,6 +530,7 @@
     <Compile Include="SamplePages\TestPage.aspx.designer.cs">
       <DependentUpon>TestPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Security\SecurityController.cs" />
     <Compile Include="Security\SecurityDbContextInitializer.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

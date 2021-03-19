@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,7 +9,8 @@ using System.Web.UI.WebControls;
 #region Additonal Namespaces
 using ChinookSystem.BLL;
 using ChinookSystem.ViewModels;
-
+using System.Configuration;
+using WebApp.Security;
 #endregion
 
 namespace WebApp.SamplePages
@@ -18,6 +20,40 @@ namespace WebApp.SamplePages
         protected void Page_Load(object sender, EventArgs e)
         {
             TracksSelectionList.DataSource = null;
+
+            //security code for forms security
+            //check to see if the user is logged on
+            if (Request.IsAuthenticated)
+            {
+                //logged in
+                //Do you have the authority to be on this page
+                if (User.IsInRole(ConfigurationManager.AppSettings["customerRole"]))
+                {
+                    //authorized
+                    //obtain the CustomerId on the security User record
+                    SecurityController ssysmgr = new SecurityController();
+                    //pass the value of the username to the method GetCurrentCustomerId
+                    //returned: customerid (int?)
+                    int? customerid = ssysmgr.GetCurrentUserCustomerId(User.Identity.Name);
+                    //need to covert the nullable int into a normal int for lookup to
+                    //  the CustomerController in my BLL
+                    //int custid = customerid != null ? int.Parse(customerid.ToString()) : default(int);
+                    //short hand
+                    int custid = customerid ?? default(int);
+                    //use the custid to do the standard customer record lookup
+
+                    LoggedUser.Text = custid.ToString();
+                }
+                else
+                {
+                    // not authorized
+                    Response.Redirect("~/SamplePages/DeniedAccess.aspx");
+                }
+            }
+            else
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
         }
 
         #region MessageUserControl Error Handling for ODS
@@ -135,7 +171,10 @@ namespace WebApp.SamplePages
             //username is coming from the system via security
             //since security has yet to be installed, a defualt will be setup for the
             //   username value
-            string username = "HansenB";
+            //string username = "HansenB";
+
+            //now that security is inplace we will use the User instance of get the user name
+            string username = User.Identity.Name;
             if (string.IsNullOrEmpty(PlaylistName.Text))
             {
                 MessageUserControl.ShowInfo("Playlist Search", "No playlist name was supplied.");
